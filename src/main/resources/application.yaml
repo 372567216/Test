@@ -1,0 +1,27 @@
+server:
+  port: 8080
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    lettuce:
+      pool:
+        min-idle: 50
+        max-idle: 200
+        max-active: 200
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: 123456
+    url: jdbc:mysql://localhost:3306/demo?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+  jpa:
+    properties:
+      hibernate:
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+        jdbc:
+          time_zone: GMT+8
+        show_sql: true
+        user_sql_comments: true
+    show-sql: true
+
