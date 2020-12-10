@@ -4,13 +4,7 @@ import com.example.demo.constant.AlertCodeConstant;
 
 import lombok.Getter;
 
-/**
- * 该异常是需要前端弹出或者展示的
- *
- * @author: liuyiyou.cn
- * @date: 2020/7/20
- * @version: V1.0
- */
+
 @Getter
 public class AlertException extends RuntimeException {
 
