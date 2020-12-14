@@ -2,6 +2,15 @@ plugins {
 	id 'org.springframework.boot' version '1.5.22.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
+	id 'com.google.cloud.tools.jib' version '1.1.2'
+}
+
+apply plugin: "com.google.cloud.tools.jib"
+
+version = '1.0.00'
+sourceCompatibility = '1.8'
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
 }
 
 group 'com.example.it'
@@ -11,6 +20,18 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+	maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+}
+
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
 }
 
 
@@ -20,6 +41,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis:1.5.2.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	implementation 'org.projectlombok:lombok:1.18.8'
 	implementation 'mysql:mysql-connector-java'
 	implementation 'mysql:mysql-connector-java'
@@ -31,8 +53,36 @@ dependencies {
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.0'
 	implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.0'
 	implementation 'cn.hutool:hutool-all:5.3.7'
+	implementation 'com.alibaba:fastjson:1.2.70'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+ext {
+	set('registryUrl',"registry.cn-hangzhou.aliyuncs.com")
+	set('registryNamespace',"qiguanghui")
+	set('registryUsername',"guanghui_qi")
+	set('registryPassword',"asd6848975")
+}
+jib {
+	from {
+		image = "java:8"
+	}
+	to {
+		image = "${registryUrl}/${registryNamespace}/demo"
+		tags = ["latest","${project.version}".toString() ]
+		auth {
+			username = "${registryUsername}"
+			password = "${registryPassword}"
+		}
+	}
+	container {
+		/**
+		 * 设置jvm的启动参数
+		 * user.timezone - 解决Java程序的时区问题
+		 */
+		jvmFlags = ['-Duser.timezone=Asia/Shanghai']
+		mainClass="com.example.demo.DemoApplication"
 	}
 }

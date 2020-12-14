@@ -22,10 +22,6 @@ public class ParamsServiceImp implements IParamsService {
 
   @Override
   public Params insert(ParamsDTO dto) {
-    String str = redisTemplate.opsForValue().get(dto.getParam1() + ":" + dto.getParam2());
-    if(StringUtils.hasText(str)) {
-      return JSONObject.parseObject(str,Params.class);
-    }
     Params param = paramsRepository
         .findByParam1AndParam2(dto.getParam1(), dto.getParam2());
     if(param == null) {
@@ -34,8 +30,6 @@ public class ParamsServiceImp implements IParamsService {
       paramsEntity.setParam2(dto.getParam2());
       param = paramsRepository.save(paramsEntity);
     }
-    String paramJSON = JSONObject.toJSONString(param);
-    redisTemplate.opsForValue().set(param.getParam1()+":"+param.getParam2(),paramJSON);
     return param;
   }
 
