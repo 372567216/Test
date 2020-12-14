@@ -63,7 +63,7 @@ ext {
 	set('registryUrl',"registry.cn-hangzhou.aliyuncs.com")
 	set('registryNamespace',"qiguanghui")
 	set('registryUsername',"guanghui_qi")
-	set('registryPassword',"asd6848975")
+	set('registryPassword',"xxxxxx-password")
 }
 jib {
 	from {
