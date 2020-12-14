@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.DTO.ParamsDTO;
+import com.example.demo.dto.ParamsDTO;
 import com.example.demo.config.entity.ResultEntity;
 import com.example.demo.entity.Params;
 import com.example.demo.service.IParamsService;

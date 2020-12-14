@@ -1,7 +1,7 @@
 package com.example.demo.service.ParamsServiceImp;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.DTO.ParamsDTO;
+import com.example.demo.dto.ParamsDTO;
 import com.example.demo.entity.Params;
 import com.example.demo.repository.ParamsRepository;
 import com.example.demo.service.IParamsService;
